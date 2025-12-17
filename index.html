@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zia | Portfolio</title>
+  <style>
+    /* ===== DESIGN SYSTEM ===== */
+    :root {
+      --bg-main: #f8fafc;
+      --bg-soft: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --border: #e5e7eb;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 4px 10px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, #f8fafc, #eef2ff);
+      color: var(--text-main);
+      line-height: 1.7;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 90px 24px;
+    }
+
+    section {
+      margin-bottom: 110px;
+    }
+
+    /* ===== HERO ===== */
+    header {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 120px;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      padding: 90px 80px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      color: #e5e7eb;
+    }
+
+    header h1 {
+      font-size: 46px;
+      font-weight: 750;
+      letter-spacing: -0.6px;
+      margin-bottom: 18px;
+      color: #ffffff;
+    }
+
+    header h1 span {
+      color: var(--primary-soft);
+    }
+
+    header p {
+      font-size: 18px;
+      color: #cbd5f5;
+      margin-bottom: 30px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 26px;
+      background: #ffffff;
+      color: #0f172a;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+
+    /* ===== SECTION TITLES ===== */
+    section h2 {
+      font-size: 28px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    section h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* ===== ABOUT ===== */
+    .about p {
+      max-width: 820px;
+      font-size: 17px;
+      color: var(--text-muted);
+    }
+
+    /* ===== SKILLS ===== */
+    .skills ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .skills li {
+      background: var(--bg-soft);
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .skills li:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ===== PROJECTS ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 34px;
+      margin-top: 40px;
+    }
+
+    .project {
+      background: var(--bg-soft);
+      padding: 34px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 55px rgba(0,0,0,0.15);
+    }
+
+    .project h3 {
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+
+    .project p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      width: 100%;
+      max-width: 100%;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: #e5e7eb;
+      padding: 80px 80px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .contact h2 {
+      color: #ffffff;
+    }
+
+    .contact p {
+      font-size: 16px;
+      margin-top: 14px;
+    }
+	
+	.link {
+		color : #e5e7eb;
+		}
+
+    /* ===== FOOTER ===== */
+    footer {
+      margin-top: 120px;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      header {
+        padding: 60px 28px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      .contact {
+        padding: 60px 28px;
+      }
+
+      section {
+        margin-bottom: 80px;
+      }
+    }
+
+      section {
+        margin-bottom: 80px;
+      }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Hi, I'm <span>Zia</span></h1>
+      <p>
+        Python Web Scraper & Automation Developer building reliable data extraction systems for modern, JavaScript-heavy websites.
+      </p>
+      <a href="#contact" class="cta">Contact Me</a>
+    </header>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>
+        I specialize in designing production-ready scraping and automation solutions using Python. My focus is on accuracy, stability, and delivering clean datasets that businesses can immediately use.
+      </p>
+    </section>
+
+    <section class="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>Python</li>
+        <li>BeautifulSoup</li>
+        <li>Selenium</li>
+        <li>Playwright</li>
+        <li>Pandas</li>
+        <li>Web Automation</li>
+        <li>Data Cleaning</li>
+        <li>Anti-Bot Handling</li>
+      </ul>
+    </section>
+
+    <section class="projects">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project">
+          <h3>Multi-Page E-commerce Scraper</h3>
+          <p>
+            Scraped structured product data across hundreds of pages and delivered analysis-ready CSV files for pricing and inventory monitoring.
+          </p>
+        </div>
+
+        <div class="project">
+          <h3>JavaScript Automation System</h3>
+          <p>
+            Built Playwright-based automation handling infinite scroll, modals, and delayed rendering with consistent execution reliability.
+          </p>
+        </div>
+
+        <div class="project">
+          <h3>Anti-Blocking Scraping Framework</h3>
+          <p>
+            Developed a reusable framework with header rotation, throttling, and retry logic to improve scrape success rates.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>Email: ziaprince27@gmail.com</p>
+      <p>GitHub: <a href="https://github.com/ZiaPrince2691" class="link">ZiaPrince2691</a></p>
+      <p>Upwork: <a href="https://www.upwork.com/freelancers/~01d7575ccea7a19051" class="link">Zia P.</a></p>
+    </section>
+
+    <footer>
+      © 2025 Zia
+    </footer>
+  </div>
+
+</body>
+</html>
