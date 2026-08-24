@@ -1,305 +1,762 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zia | Portfolio</title>
-  <style>
-    /* ===== DESIGN SYSTEM ===== */
-    :root {
-      --bg-main: #f8fafc;
-      --bg-soft: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --primary: #1d4ed8;
-      --primary-soft: #dbeafe;
-      --border: #e5e7eb;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 4px 10px rgba(0,0,0,0.05);
-      --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Zia — Backend Developer | Python & FastAPI</title>
+<meta name="description" content="Muhammad Zia — Backend Developer specializing in Python, FastAPI, PostgreSQL, Redis, Celery and Docker. REST APIs, real-time systems and background processing.">
+<meta property="og:title" content="Muhammad Zia — Backend Developer | Python & FastAPI">
+<meta property="og:description" content="Backend developer building REST APIs, real-time systems, and background pipelines with Python, FastAPI, PostgreSQL, Redis, Celery and Docker.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230A0E1A%22/><text x=%2250%22 y=%2265%22 font-size=%2255%22 fill=%22%2300D9B2%22 font-family=%22monospace%22 text-anchor=%22middle%22>Z</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-dark:#0A0E1A;
+    --bg-dark-2:#0F1526;
+    --bg-dark-3:#141B30;
+    --bg-light:#F4F6FC;
+    --surface:#FFFFFF;
+    --border-light:#E3E7F3;
+    --border-dark:#232B45;
+    --text-dark:#0B0E1A;
+    --text-light:#EBEEF9;
+    --muted-dark:#5A6178;
+    --muted-light:#8D94B3;
+    --indigo:#4C5FD5;
+    --indigo-soft:#7C8AE8;
+    --cyan:#00D9B2;
+    --get:#3C8CE7;
+    --post:#22B573;
+    --delete:#F0554F;
+    --patch:#1FBFAE;
+    --radius:14px;
+    --maxw:1120px;
+    font-size:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    background:var(--bg-light);
+    color:var(--text-dark);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ul{list-style:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  .section{padding:96px 0;}
+  @media (max-width:720px){ .section{padding:64px 0;} }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.8rem;
+    letter-spacing:0.08em;
+    color:var(--indigo);
+    text-transform:lowercase;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"$"; color:var(--cyan);}
+  h2.heading{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(1.7rem, 3vw, 2.3rem);
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin-bottom:10px;
+  }
+  .heading-rule{
+    width:46px; height:3px; background:var(--indigo);
+    border-radius:2px; margin-bottom:28px;
+  }
+  .section-intro{max-width:600px; color:var(--muted-dark); margin-bottom:44px; font-size:1.02rem;}
+
+  /* Nav */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,14,26,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-dark);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--text-light); font-weight:600; font-size:0.98rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-logo .dot{width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
+  .nav-links{display:flex; align-items:center; gap:30px;}
+  .nav-links a{
+    color:var(--muted-light); font-size:0.9rem; font-weight:500;
+    transition:color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--text-light);}
+  .nav-cta{
+    background:var(--indigo); color:#fff !important; padding:9px 18px;
+    border-radius:8px; font-weight:600; font-size:0.86rem;
+  }
+  .nav-cta:hover{background:var(--indigo-soft);}
+  .nav-toggle{display:none; background:none; border:none; color:var(--text-light); font-size:1.4rem; cursor:pointer;}
+  @media (max-width:760px){
+    .nav-links{
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--bg-dark-2); flex-direction:column; align-items:flex-start;
+      padding:20px 28px; gap:18px; border-bottom:1px solid var(--border-dark);
+      display:none;
     }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+  }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    }
+  /* Hero */
+  .hero{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(76,95,213,0.35), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(0,217,178,0.14), transparent 55%),
+      var(--bg-dark);
+    color:var(--text-light);
+    padding:100px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
+  .hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(2.3rem, 5vw, 3.4rem);
+    font-weight:700; letter-spacing:-0.02em; line-height:1.08;
+    margin-bottom:16px;
+  }
+  .hero h1 .role{
+    display:block; color:var(--indigo-soft); font-size:0.5em; font-weight:600;
+    margin-top:10px; font-family:'JetBrains Mono',monospace; letter-spacing:0;
+  }
+  .hero p.tagline{
+    color:var(--muted-light); font-size:1.08rem; max-width:480px; margin-bottom:32px;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:0.92rem;
+    padding:13px 24px; border-radius:9px; border:1px solid transparent;
+    cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--indigo); color:#fff;}
+  .btn-primary:hover{background:var(--indigo-soft);}
+  .btn-ghost{border-color:var(--border-dark); color:var(--text-light);}
+  .btn-ghost:hover{border-color:var(--indigo-soft); background:rgba(124,138,232,0.08);}
+  .hero-links{display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:28px;}
+  .hero-links a{
+    font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--muted-light);
+    border-bottom:1px solid transparent;
+  }
+  .hero-links a:hover{color:var(--cyan); border-color:var(--cyan);}
 
-    body {
-      background: linear-gradient(180deg, #f8fafc, #eef2ff);
-      color: var(--text-main);
-      line-height: 1.7;
-    }
+  /* terminal card */
+  .terminal{
+    background:var(--bg-dark-3); border:1px solid var(--border-dark);
+    border-radius:var(--radius); overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    background:#101528; border-bottom:1px solid var(--border-dark);
+  }
+  .terminal-bar span{width:11px; height:11px; border-radius:50%;}
+  .terminal-bar span:nth-child(1){background:#F0554F;}
+  .terminal-bar span:nth-child(2){background:#E8B84B;}
+  .terminal-bar span:nth-child(3){background:#22B573;}
+  .terminal-title{
+    margin-left:8px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--muted-light);
+  }
+  .terminal-body{padding:22px 20px; font-family:'JetBrains Mono',monospace; font-size:0.86rem; line-height:1.75;}
+  .terminal-body .prompt{color:var(--cyan);}
+  .terminal-body .cmd{color:var(--text-light);}
+  .terminal-body .key{color:var(--indigo-soft);}
+  .terminal-body .str{color:#E8B84B;}
+  .terminal-body .brace{color:var(--muted-light);}
+  .terminal-body .caret{display:inline-block; width:7px; height:14px; background:var(--cyan); margin-left:2px; animation:blink 1s steps(1) infinite; vertical-align:middle;}
+  @keyframes blink{50%{opacity:0;}}
 
-    /* ===== LAYOUT ===== */
-    .container {
-      max-width: 1150px;
-      margin: auto;
-      padding: 90px 24px;
-    }
+  /* About */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:start;}
+  @media (max-width:800px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{color:var(--muted-dark); font-size:1.02rem; margin-bottom:16px; max-width:560px;}
+  .about-stack{
+    background:var(--bg-dark); color:var(--text-light);
+    border-radius:var(--radius); padding:24px;
+  }
+  .about-stack h3{font-family:'JetBrains Mono',monospace; font-size:0.84rem; color:var(--cyan); margin-bottom:14px;}
+  .about-stack ul{display:flex; flex-wrap:wrap; gap:8px;}
+  .about-stack li{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem;
+    background:var(--bg-dark-3); border:1px solid var(--border-dark);
+    padding:6px 11px; border-radius:6px; color:var(--muted-light);
+  }
 
-    section {
-      margin-bottom: 110px;
-    }
+  /* Skills */
+  .skills-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  @media (max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-card{
+    background:var(--surface); border:1px solid var(--border-light);
+    border-radius:var(--radius); padding:22px;
+  }
+  .skill-card h4{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; letter-spacing:0.04em;
+    color:var(--indigo); text-transform:uppercase; margin-bottom:14px;
+  }
+  .skill-card ul{display:flex; flex-direction:column; gap:9px;}
+  .skill-card li{
+    font-size:0.92rem; color:var(--text-dark); display:flex; align-items:center; gap:9px;
+  }
+  .skill-card li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--cyan); flex:none;}
 
-    /* ===== HERO ===== */
-    header {
-      width: 100%;
-      max-width: 100%;
-      margin-bottom: 120px;
-      background: linear-gradient(135deg, #0f172a, #020617);
-      padding: 90px 80px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      color: #e5e7eb;
-    }
+  /* Progression strip */
+  .progress-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    background:var(--surface); border:1px solid var(--border-light); border-radius:var(--radius);
+    overflow:hidden; margin-bottom:8px;
+  }
+  @media (max-width:800px){.progress-strip{grid-template-columns:1fr;}}
+  .progress-step{
+    padding:24px 22px; border-right:1px solid var(--border-light); position:relative;
+  }
+  .progress-strip .progress-step:last-child{border-right:none;}
+  @media (max-width:800px){.progress-step{border-right:none; border-bottom:1px solid var(--border-light);}
+    .progress-strip .progress-step:last-child{border-bottom:none;}}
+  .progress-step .n{
+    font-family:'JetBrains Mono',monospace; color:var(--indigo-soft); background:var(--bg-dark);
+    display:inline-block; padding:2px 8px; border-radius:5px; font-size:0.72rem; margin-bottom:12px;
+  }
+  .progress-step h5{font-family:'Space Grotesk',sans-serif; font-size:1.02rem; margin-bottom:6px;}
+  .progress-step p{font-size:0.86rem; color:var(--muted-dark);}
+  .progress-step .arrow{
+    position:absolute; right:-11px; top:50%; transform:translateY(-50%);
+    color:var(--border-light); font-size:1.3rem; z-index:2;
+  }
+  @media (max-width:800px){.progress-step .arrow{display:none;}}
 
-    header h1 {
-      font-size: 46px;
-      font-weight: 750;
-      letter-spacing: -0.6px;
-      margin-bottom: 18px;
-      color: #ffffff;
-    }
+  /* Projects */
+  .project-card{
+    background:var(--surface); border:1px solid var(--border-light);
+    border-radius:var(--radius); overflow:hidden; margin-bottom:28px;
+  }
+  .project-card.featured{
+    border-color:var(--indigo); box-shadow:0 0 0 1px var(--indigo), 0 30px 60px -30px rgba(76,95,213,0.35);
+  }
+  .project-head{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+    padding:26px 28px 18px; flex-wrap:wrap;
+  }
+  .project-head-left{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .project-index{
+    font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--muted-dark);
+    background:var(--bg-light); border:1px solid var(--border-light); padding:3px 9px; border-radius:6px;
+  }
+  .project-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.03em;
+    padding:3px 9px; border-radius:6px; text-transform:uppercase; font-weight:600;
+  }
+  .tag-foundation{background:#EEF1FE; color:var(--indigo);}
+  .tag-flagship{background:#0A0E1A; color:var(--cyan);}
+  .project-card h3{font-family:'Space Grotesk',sans-serif; font-size:1.5rem; margin-top:8px;}
+  .project-links{display:flex; gap:10px; flex-wrap:wrap;}
+  .project-links a{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:600;
+    padding:8px 14px; border-radius:7px; border:1px solid var(--border-light);
+    color:var(--text-dark); display:inline-flex; align-items:center; gap:6px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .project-links a:hover{border-color:var(--indigo); background:#F5F6FE;}
+  .project-links a.primary{background:var(--indigo); color:#fff; border-color:var(--indigo);}
+  .project-links a.primary:hover{background:var(--indigo-soft);}
 
-    header h1 span {
-      color: var(--primary-soft);
-    }
+  .project-body{padding:0 28px 28px;}
+  .project-desc{color:var(--muted-dark); font-size:0.98rem; max-width:640px; margin-bottom:18px;}
+  .project-media-grid{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:22px; margin-bottom:20px;
+  }
+  @media (max-width:760px){.project-media-grid{grid-template-columns:1fr;}}
 
-    header p {
-      font-size: 18px;
-      color: #cbd5f5;
-      margin-bottom: 30px;
-    }
+  .endpoint-block{
+    background:var(--bg-light); border:1px solid var(--border-light);
+    border-radius:10px; overflow:hidden;
+  }
+  .endpoint-block-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted-dark);
+    padding:10px 14px; border-bottom:1px solid var(--border-light); background:var(--surface);
+    text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .endpoint-row{
+    display:flex; align-items:center; flex-wrap:wrap; gap:4px 10px; padding:9px 14px;
+    border-bottom:1px solid var(--border-light); font-family:'JetBrains Mono',monospace; font-size:0.8rem;
+  }
+  @media (max-width:480px){
+    .endpoint-desc{flex-basis:100%; padding-left:38px; font-size:0.72rem;}
+  }
+  .endpoint-row:last-child{border-bottom:none;}
+  .method{
+    flex:none; color:#fff; font-weight:700; font-size:0.68rem; padding:3px 8px; border-radius:5px;
+    letter-spacing:0.02em;
+  }
+  .method.get{background:var(--get);}
+  .method.post{background:var(--post);}
+  .method.delete{background:var(--delete);}
+  .method.patch{background:var(--patch);}
+  .endpoint-path{color:var(--text-dark); font-weight:600;}
+  .endpoint-desc{color:var(--muted-dark); font-size:0.76rem;}
 
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 26px;
-      background: #ffffff;
-      color: #0f172a;
-      text-decoration: none;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      box-shadow: var(--shadow-md);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+  .video-frame{
+    background:var(--bg-dark); border-radius:10px; overflow:hidden; position:relative;
+    border:1px solid var(--border-dark); aspect-ratio:16/10; min-height:200px;
+  }
+  .video-frame video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .video-fallback{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:var(--muted-light); font-family:'JetBrains Mono',monospace; font-size:0.78rem; text-align:center; padding:20px;
+    pointer-events:none;
+  }
+  .video-fallback .play{
+    width:46px; height:46px; border-radius:50%; border:1px solid var(--border-dark); margin:0 auto 12px;
+    display:flex; align-items:center; justify-content:center; color:var(--cyan); font-size:1rem;
+  }
 
-    .cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
-    }
+  .badge-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tech-badge{
+    font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--muted-dark);
+    background:var(--bg-light); border:1px solid var(--border-light); padding:5px 10px; border-radius:6px;
+  }
 
-    /* ===== SECTION TITLES ===== */
-    section h2 {
-      font-size: 28px;
-      margin-bottom: 28px;
-      position: relative;
-    }
+  /* Architecture cards */
+  .arch-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:900px){.arch-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.arch-grid{grid-template-columns:1fr;}}
+  .arch-card{
+    background:var(--bg-dark); color:var(--text-light); border-radius:var(--radius);
+    padding:24px; border:1px solid var(--border-dark);
+  }
+  .arch-card .tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--cyan); margin-bottom:10px; display:block;
+  }
+  .arch-card h4{font-family:'Space Grotesk',sans-serif; font-size:1.05rem; margin-bottom:8px;}
+  .arch-card p{font-size:0.86rem; color:var(--muted-light);}
 
-    section h2::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -10px;
-      width: 60px;
-      height: 4px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
+  /* Philosophy */
+  .philosophy{
+    background:var(--surface); border:1px solid var(--border-light); border-radius:var(--radius);
+    padding:36px; display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center;
+  }
+  @media (max-width:640px){.philosophy{grid-template-columns:1fr;}}
+  .philosophy .mark{font-family:'JetBrains Mono',monospace; font-size:2.2rem; color:var(--indigo); line-height:1;}
+  .philosophy ul{display:flex; flex-direction:column; gap:8px;}
+  .philosophy li{font-size:0.94rem; color:var(--muted-dark);}
+  .philosophy li b{color:var(--text-dark); font-weight:600;}
 
-    /* ===== ABOUT ===== */
-    .about p {
-      max-width: 820px;
-      font-size: 17px;
-      color: var(--text-muted);
-    }
+  /* Contact */
+  .contact{
+    background:var(--bg-dark); color:var(--text-light); border-radius:var(--radius);
+    padding:56px 44px; display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;
+    position:relative; overflow:hidden;
+  }
+  .contact::before{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle at 90% 10%, rgba(0,217,178,0.14), transparent 55%);
+  }
+  @media (max-width:760px){.contact{grid-template-columns:1fr;}}
+  .contact h2{font-family:'Space Grotesk',sans-serif; font-size:1.9rem; margin-bottom:6px; position:relative;}
+  .contact .role{font-family:'JetBrains Mono',monospace; color:var(--indigo-soft); font-size:0.9rem; margin-bottom:18px; position:relative;}
+  .contact-list{display:flex; flex-direction:column; gap:10px; position:relative;}
+  .contact-list a, .contact-list span{
+    font-family:'JetBrains Mono',monospace; font-size:0.9rem; color:var(--muted-light);
+  }
+  .contact-list a:hover{color:var(--cyan);}
+  .contact-cta{position:relative;}
 
-    /* ===== SKILLS ===== */
-    .skills ul {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-top: 36px;
-    }
-
-    .skills li {
-      background: var(--bg-soft);
-      padding: 16px 18px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      font-size: 15px;
-      font-weight: 500;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .skills li:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-
-    /* ===== PROJECTS ===== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 34px;
-      margin-top: 40px;
-    }
-
-    .project {
-      background: var(--bg-soft);
-      padding: 34px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .project:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 55px rgba(0,0,0,0.15);
-    }
-
-    .project h3 {
-      font-size: 20px;
-      margin-bottom: 14px;
-    }
-
-    .project p {
-      font-size: 15px;
-      color: var(--text-muted);
-    }
-
-    /* ===== CONTACT ===== */
-    .contact {
-      width: 100%;
-      max-width: 100%;
-      background: linear-gradient(135deg, #0f172a, #020617);
-      color: #e5e7eb;
-      padding: 80px 80px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-    }
-
-    .contact h2 {
-      color: #ffffff;
-    }
-
-    .contact p {
-      font-size: 16px;
-      margin-top: 14px;
-    }
-	
-	.link {
-		color : #e5e7eb;
-		}
-
-    /* ===== FOOTER ===== */
-    footer {
-      margin-top: 120px;
-      font-size: 14px;
-      color: #64748b;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 600px) {
-      header {
-        padding: 60px 28px;
-      }
-
-      header h1 {
-        font-size: 34px;
-      }
-
-      .contact {
-        padding: 60px 28px;
-      }
-
-      section {
-        margin-bottom: 80px;
-      }
-    }
-
-      section {
-        margin-bottom: 80px;
-      }
-  </style>
+  footer{
+    text-align:center; padding:34px 0; color:var(--muted-dark); font-size:0.8rem;
+    font-family:'JetBrains Mono',monospace;
+  }
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Hi, I'm <span>Zia</span></h1>
-      <p>
-        Python Web Scraper & Automation Developer building reliable data extraction systems for modern, JavaScript-heavy websites.
-      </p>
-      <a href="#contact" class="cta">Contact Me</a>
-    </header>
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo"><span class="dot"></span>zia<span style="color:var(--muted-light)">.dev</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact" class="nav-cta">Contact Me</a>
+    </nav>
+  </div>
+</header>
 
-    <section class="about">
-      <h2>About</h2>
-      <p>
-        I specialize in designing production-ready scraping and automation solutions using Python. My focus is on accuracy, stability, and delivering clean datasets that businesses can immediately use.
-      </p>
-    </section>
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Muhammad Zia<span class="role">Backend Developer — Python &amp; FastAPI</span></h1>
+      <p class="tagline">I build REST APIs, real-time systems, and background pipelines with Python, FastAPI, PostgreSQL, Redis, and Docker.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Contact Me</a>
+      </div>
+      <div class="hero-links">
+        <a href="#" aria-label="GitHub profile">github.com/ziaprince</a>
+        <a href="#" aria-label="LinkedIn profile">linkedin.com/in/zia</a>
+        <a href="#" aria-label="Upwork profile">upwork.com/freelancers/zia</a>
+      </div>
+    </div>
+    <div class="terminal" aria-hidden="true">
+      <div class="terminal-bar"><span></span><span></span><span></span><div class="terminal-title">zsh — whoami</div></div>
+      <div class="terminal-body">
+        <div><span class="prompt">$</span> <span class="cmd">curl -s /developer/zia | jq</span></div>
+        <div><span class="brace">{</span></div>
+        <div>&nbsp;&nbsp;<span class="key">"role"</span>: <span class="str">"Backend Developer"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="key">"stack"</span>: [<span class="str">"Python"</span>, <span class="str">"FastAPI"</span>, <span class="str">"PostgreSQL"</span>, <span class="str">"Redis"</span>, <span class="str">"Celery"</span>, <span class="str">"Docker"</span>],</div>
+        <div>&nbsp;&nbsp;<span class="key">"focus"</span>: <span class="str">"APIs, real-time systems, background processing"</span>,</div>
+        <div>&nbsp;&nbsp;<span class="key">"status"</span>: <span class="str">"open to freelance work"</span></div>
+        <div><span class="brace">}</span><span class="caret"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="skills">
-      <h2>Skills</h2>
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="eyebrow">about</p>
+      <h2 class="heading">What I do</h2>
+      <div class="heading-rule"></div>
+      <div class="about-text">
+        <p>I'm a backend developer focused on building real-world web applications and APIs with Python. My work centers on designing REST APIs, modeling relational data, and layering in the pieces that turn a CRUD app into a proper backend system — caching, background workers, authentication, and real-time communication.</p>
+        <p>I've built four progressively more complex projects that trace that path: from a straightforward CRUD API to a real-time system running WebSockets, Redis, and Celery behind Docker. Each one is a real, deployed application with live API docs — not a tutorial clone.</p>
+      </div>
+    </div>
+    <div class="about-stack">
+      <h3>// core stack</h3>
       <ul>
-        <li>Python</li>
-        <li>BeautifulSoup</li>
-        <li>Selenium</li>
-        <li>Playwright</li>
-        <li>Pandas</li>
-        <li>Web Automation</li>
-        <li>Data Cleaning</li>
-        <li>Anti-Bot Handling</li>
+        <li>Python</li><li>FastAPI</li><li>SQLAlchemy</li><li>PostgreSQL</li>
+        <li>Redis</li><li>Celery</li><li>WebSockets</li><li>Docker</li>
+        <li>JWT Auth</li><li>Alembic</li><li>Async Python</li><li>Rate Limiting</li>
       </ul>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="projects">
-      <h2>Projects</h2>
-      <div class="projects-grid">
-        <div class="project">
-          <h3>Multi-Page E-commerce Scraper</h3>
-          <p>
-            Scraped structured product data across hundreds of pages and delivered analysis-ready CSV files for pricing and inventory monitoring.
-          </p>
+<section class="section" id="skills" style="background:var(--surface); border-top:1px solid var(--border-light); border-bottom:1px solid var(--border-light);">
+  <div class="wrap">
+    <p class="eyebrow">skills</p>
+    <h2 class="heading">Technical skills</h2>
+    <div class="heading-rule"></div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>Backend</h4>
+        <ul>
+          <li>Python</li><li>FastAPI</li><li>REST APIs</li><li>WebSockets</li>
+          <li>Async Python</li><li>JWT Authentication</li><li>Rate Limiting</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Databases</h4>
+        <ul>
+          <li>PostgreSQL</li><li>SQL</li><li>SQLAlchemy</li><li>Alembic</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Infrastructure</h4>
+        <ul>
+          <li>Redis</li><li>Celery</li><li>Docker</li><li>Docker Compose</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Tools</h4>
+        <ul>
+          <li>Git</li><li>GitHub</li><li>Linux / WSL</li><li>API Documentation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="wrap">
+    <p class="eyebrow">projects</p>
+    <h2 class="heading">Featured projects</h2>
+    <div class="heading-rule"></div>
+    <p class="section-intro">Four applications, each one built to add a layer of backend complexity on top of the last — from CRUD fundamentals to a real-time system with caching, background workers and containerized infrastructure.</p>
+
+    <div class="progress-strip">
+      <div class="progress-step"><span class="n">01</span><h5>Expense Tracker</h5><p>CRUD &amp; API fundamentals</p><span class="arrow">→</span></div>
+      <div class="progress-step"><span class="n">02</span><h5>Mini-URL</h5><p>App logic + analytics</p><span class="arrow">→</span></div>
+      <div class="progress-step"><span class="n">03</span><h5>TeamWork</h5><p>Docker + Redis + Celery</p><span class="arrow">→</span></div>
+      <div class="progress-step"><span class="n">04</span><h5>Qissa</h5><p>Real-time + rate limiting</p></div>
+    </div>
+    <div style="height:44px"></div>
+
+    <!-- Project 1 -->
+    <article class="project-card">
+      <div class="project-head">
+        <div class="project-head-left">
+          <span class="project-index">01</span>
+          <span class="project-tag tag-foundation">Foundation</span>
         </div>
-
-        <div class="project">
-          <h3>JavaScript Automation System</h3>
-          <p>
-            Built Playwright-based automation handling infinite scroll, modals, and delayed rendering with consistent execution reliability.
-          </p>
-        </div>
-
-        <div class="project">
-          <h3>Anti-Blocking Scraping Framework</h3>
-          <p>
-            Developed a reusable framework with header rotation, throttling, and retry logic to improve scrape success rates.
-          </p>
+        <div class="project-links">
+          <a href="https://expense-tracker-frontend-nu-eight.vercel.app/" target="_blank" rel="noopener">Live App ↗</a>
+          <a href="https://expense-tracker-backend-3txl.onrender.com/docs" target="_blank" rel="noopener" class="primary">API Docs ↗</a>
         </div>
       </div>
-    </section>
+      <div class="project-body">
+        <h3>Expense Tracker</h3>
+        <p class="project-desc">A full-stack expense tracking application. My foundational backend project — establishes REST API design, database modeling, and backend/frontend integration.</p>
+        <div class="project-media-grid">
+          <div class="endpoint-block">
+            <div class="endpoint-block-label">API surface</div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/users/</span><span class="endpoint-desc">Create user</span></div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/login</span><span class="endpoint-desc">Login</span></div>
+            <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/transactions/</span><span class="endpoint-desc">Get transactions</span></div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/transactions/</span><span class="endpoint-desc">Create transaction</span></div>
+            <div class="endpoint-row"><span class="method delete">DELETE</span><span class="endpoint-path">/transactions/{id}</span><span class="endpoint-desc">Delete transaction</span></div>
+          </div>
+          <div class="video-frame">
+            <video autoplay muted playsinline controls preload="metadata" poster="">
+              <source src="/videos/expense-tracker.mp4" type="video/mp4">
+            </video>
+            <div class="video-fallback"><div class="play">▶</div>demo video — expense-tracker.mp4</div>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="tech-badge">Python</span><span class="tech-badge">FastAPI</span><span class="tech-badge">PostgreSQL</span>
+          <span class="tech-badge">SQLAlchemy</span><span class="tech-badge">REST API</span><span class="tech-badge">CRUD</span>
+        </div>
+      </div>
+    </article>
 
-    <section id="contact" class="contact">
-      <h2>Contact</h2>
-      <p>Email: ziaprince27@gmail.com</p>
-      <p>GitHub: <a href="https://github.com/ZiaPrince2691" class="link">ZiaPrince2691</a></p>
-      <p>Upwork: <a href="https://www.upwork.com/freelancers/~01d7575ccea7a19051" class="link">Zia P.</a></p>
-    </section>
+    <!-- Project 2 -->
+    <article class="project-card">
+      <div class="project-head">
+        <div class="project-head-left">
+          <span class="project-index">02</span>
+          <span class="project-tag tag-foundation">Application logic</span>
+        </div>
+        <div class="project-links">
+          <a href="https://mini-url-frontend-five.vercel.app/" target="_blank" rel="noopener">Live App ↗</a>
+          <a href="https://mini-url-w5qs.onrender.com/docs" target="_blank" rel="noopener" class="primary">API Docs ↗</a>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Mini-URL</h3>
+        <p class="project-desc">A URL shortening service with analytics tracking. A step up from CRUD alone — introduces application-specific logic like redirect handling and multi-dimensional analytics.</p>
+        <div class="project-media-grid">
+          <div class="endpoint-block">
+            <div class="endpoint-block-label">API surface</div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/urls/</span><span class="endpoint-desc">Create mini URL</span></div>
+            <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/urls/r/{code}</span><span class="endpoint-desc">Redirect URL</span></div>
+            <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/analytics/devices/{code}</span><span class="endpoint-desc">Device analytics</span></div>
+            <div class="endpoint-row"><span class="method get">GET</span><span class="endpoint-path">/analytics/cities/{code}</span><span class="endpoint-desc">City analytics</span></div>
+            <div class="endpoint-row"><span class="method delete">DELETE</span><span class="endpoint-path">/urls/{id}</span><span class="endpoint-desc">Delete URL</span></div>
+          </div>
+          <div class="video-frame">
+            <video autoplay muted playsinline controls preload="metadata">
+              <source src="/videos/mini-url.mp4" type="video/mp4">
+            </video>
+            <div class="video-fallback"><div class="play">▶</div>demo video — mini-url.mp4</div>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="tech-badge">Python</span><span class="tech-badge">FastAPI</span><span class="tech-badge">PostgreSQL</span>
+          <span class="tech-badge">SQLAlchemy</span><span class="tech-badge">Analytics</span><span class="tech-badge">REST API</span>
+        </div>
+      </div>
+    </article>
 
-    <footer>
-      © 2025 Zia
-    </footer>
+    <!-- Project 3 -->
+    <article class="project-card">
+      <div class="project-head">
+        <div class="project-head-left">
+          <span class="project-index">03</span>
+          <span class="project-tag tag-foundation">Architecture</span>
+        </div>
+        <div class="project-links">
+          <a href="https://teamwork-frontend.vercel.app/" target="_blank" rel="noopener">Live App ↗</a>
+          <a href="https://teamwork-backend-k0vy.onrender.com/docs" target="_blank" rel="noopener" class="primary">API Docs ↗</a>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>TeamWork</h3>
+        <p class="project-desc">A team collaboration app covering teams, invitations, and task management. This is where I moved past simple CRUD — into Redis caching, Celery background processing, and a fully Dockerized backend.</p>
+        <div class="project-media-grid">
+          <div class="endpoint-block">
+            <div class="endpoint-block-label">API surface</div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/teams/</span><span class="endpoint-desc">Create team</span></div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/invite/{team_id}/add</span><span class="endpoint-desc">Invite team member</span></div>
+            <div class="endpoint-row"><span class="method patch">PATCH</span><span class="endpoint-path">/invite/{invitation_id}/react</span><span class="endpoint-desc">React to invitation</span></div>
+            <div class="endpoint-row"><span class="method post">POST</span><span class="endpoint-path">/tasks/{team_id}</span><span class="endpoint-desc">Create task</span></div>
+            <div class="endpoint-row"><span class="method patch">PATCH</span><span class="endpoint-path">/tasks/{task_id}</span><span class="endpoint-desc">Change task status</span></div>
+          </div>
+          <div class="video-frame">
+            <video autoplay muted playsinline controls preload="metadata">
+              <source src="/videos/teamwork.mp4" type="video/mp4">
+            </video>
+            <div class="video-fallback"><div class="play">▶</div>demo video — teamwork.mp4</div>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="tech-badge">Python</span><span class="tech-badge">FastAPI</span><span class="tech-badge">PostgreSQL</span>
+          <span class="tech-badge">Redis</span><span class="tech-badge">Celery</span><span class="tech-badge">Docker</span>
+          <span class="tech-badge">Docker Compose</span><span class="tech-badge">JWT Auth</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 4 - Qissa, flagship -->
+    <article class="project-card featured">
+      <div class="project-head">
+        <div class="project-head-left">
+          <span class="project-index">04</span>
+          <span class="project-tag tag-flagship">Flagship</span>
+        </div>
+        <div class="project-links">
+          <a href="https://q-issa-frontend.vercel.app/login" target="_blank" rel="noopener">Live App ↗</a>
+          <a href="https://qissa-rdml.onrender.com/docs" target="_blank" rel="noopener" class="primary">API Docs ↗</a>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Qissa</h3>
+        <p class="project-desc">A real-time chat application, and the project that ties everything together: HTTP APIs + WebSockets + PostgreSQL + Redis + Celery + Docker. Built to demonstrate real-time backend architecture, not just "a chat app."</p>
+        <div class="project-media-grid">
+          <div>
+            <div class="endpoint-block-label" style="border-radius:10px 10px 0 0; border:1px solid var(--border-light); border-bottom:none;">Real-time &amp; backend features</div>
+            <div style="border:1px solid var(--border-light); border-top:none; border-radius:0 0 10px 10px; padding:14px; background:var(--bg-light);">
+              <div class="badge-row">
+                <span class="tech-badge">WebSocket messaging</span>
+                <span class="tech-badge">Read receipts</span>
+                <span class="tech-badge">Typing indicators</span>
+                <span class="tech-badge">Online / offline presence</span>
+                <span class="tech-badge">Last-seen tracking</span>
+                <span class="tech-badge">Redis presence store</span>
+                <span class="tech-badge">Multi-connection per user</span>
+                <span class="tech-badge">Celery background tasks</span>
+                <span class="tech-badge">API rate limiting</span>
+                <span class="tech-badge">JWT auth</span>
+              </div>
+            </div>
+          </div>
+          <div class="video-frame">
+            <video autoplay muted playsinline controls preload="metadata">
+              <source src="/videos/qissa.mp4" type="video/mp4">
+            </video>
+            <div class="video-fallback"><div class="play">▶</div>demo video — qissa.mp4</div>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="tech-badge">Python</span><span class="tech-badge">FastAPI</span><span class="tech-badge">PostgreSQL</span>
+          <span class="tech-badge">SQLAlchemy</span><span class="tech-badge">Redis</span><span class="tech-badge">Celery</span>
+          <span class="tech-badge">WebSockets</span><span class="tech-badge">Docker</span><span class="tech-badge">Async Python</span>
+        </div>
+      </div>
+    </article>
   </div>
+</section>
 
+<section class="section" style="background:var(--bg-dark);">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--cyan);">backend engineering</p>
+    <h2 class="heading" style="color:var(--text-light);">What I build</h2>
+    <div class="heading-rule"></div>
+    <div class="arch-grid">
+      <div class="arch-card"><span class="tag">// api</span><h4>REST APIs</h4><p>Designing structured, resource-oriented APIs with FastAPI and clear request/response contracts.</p></div>
+      <div class="arch-card"><span class="tag">// data</span><h4>Database systems</h4><p>PostgreSQL with SQLAlchemy — relationships, queries, indexes, and Alembic migrations.</p></div>
+      <div class="arch-card"><span class="tag">// cache</span><h4>Caching</h4><p>Using Redis for caching and shared application state, including presence tracking.</p></div>
+      <div class="arch-card"><span class="tag">// async</span><h4>Background processing</h4><p>Offloading work to Celery for asynchronous, non-blocking task execution.</p></div>
+      <div class="arch-card"><span class="tag">// realtime</span><h4>Real-time systems</h4><p>WebSocket-based communication for live messaging, typing state, and presence.</p></div>
+      <div class="arch-card"><span class="tag">// security</span><h4>Auth &amp; security</h4><p>JWT authentication, access control, and API rate limiting.</p></div>
+      <div class="arch-card"><span class="tag">// infra</span><h4>Containerization</h4><p>Docker and Docker Compose for reproducible development environments.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="philosophy">
+      <div class="mark">{ }</div>
+      <ul>
+        <li><b>Clean API design</b> — resource-oriented routes, clear contracts, predictable errors.</li>
+        <li><b>Proper database modeling</b> — relationships and migrations, not just tables.</li>
+        <li><b>Caching and background processing</b> where they actually earn their place.</li>
+        <li><b>Containerized development</b> for environments that behave the same everywhere.</li>
+        <li><b>Security fundamentals</b> — auth, rate limiting, and access control from the start.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div>
+        <h2>Muhammad Zia</h2>
+        <div class="role">Backend Developer | Python &amp; FastAPI</div>
+        <div class="contact-list">
+          <a href="https://mailto:muhammadzia19285@gmail.com">muhammadzia19285@gmail.com</a>
+          <a href="https://github.com/ZiaPrince2691" aria-label="GitHub">github.com</a>
+          <a href="www.linkedin.com/in/muhammad-zia-3064b8267" aria-label="LinkedIn">linkedin.com</a>
+          <a href="https://www.upwork.com/freelancers/~01d7575ccea7a19051" aria-label="Upwork">upwork.com</a>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <a href="https://mailto:muhammadzia19285@gmail.com" class="btn btn-primary">Email Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Muhammad Zia — built with FastAPI on the backend, and this on the front.</footer>
+
+<script>
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    }));  
+
+
+    document.querySelectorAll(".video-frame").forEach(frame => {
+        const video = frame.querySelector("video");
+        const fallback = frame.querySelector(".video-fallback");
+
+        video.addEventListener("play", () => {
+            fallback.style.display = "none";
+        });
+
+        video.addEventListener("pause", () => {
+            fallback.style.display = "flex";
+        });
+    });
+
+</script>
 </body>
 </html>
